@@ -1,19 +1,50 @@
-class Product
-  attr_accessor :price,:id
-  def initialize(price, id)
-    @price = price
-    @id = id
+Product = Struct.new(:price, :id)
+
+class Item
+
+  def initialize (product, quantity)
+    @product = product
+    @quantity = quantity
   end
 end
 
 class Checkout
-  attr_accessor :total
   def initialize
-    @total = 0
+    @products = Hash.new { 0 }
   end
 
   def scan(product, quantity)
-    @total += product.price * quantity
+    @products[product] += quantity
+  end
+
+  def total
+    total = 0
+    @products.each do |product, quantity|
+      total += price_of(product, quantity)
+    end
+    total
+  end
+
+  def set_discount_on(product_id)
+    @discount_product_id = product_id
+  end
+
+  private
+
+  def price_of(product, quantity)
+    if discounted?(product)
+      discount_price(product, quantity)
+    else
+      product.price * quantity
+    end
+  end
+
+  def discount_price(product, quantity)
+    product.price * ((quantity / 2) + quantity%2)
+  end
+
+  def discounted?(product)
+    @discount_product_id == product.id
   end
 end
 

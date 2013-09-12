@@ -5,7 +5,7 @@ Given(/^the price of a (\w+) is (\d+) EUR$/) do |product, price|
 end
 
 Given(/^we have a 2\-for\-1 discount on #{PRODUCT_ID}$/) do |product_id|
-  pending "How do we set a discount on #{product_id}?" # express the regexp above with the code you wish you had
+  set_discount_on product_id
 end
 
 When(/^I scan (\d+) #{PRODUCT_ID}$/) do |number, product_id|

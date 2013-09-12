@@ -19,6 +19,11 @@ module CheckoutTestingDSL
   def inventory
     @inventory ||= Inventory.new
   end
+
+  def set_discount_on(product_id)
+    checkout.set_discount_on(product_id)
+  end
+
 end
 
 World(CheckoutTestingDSL)
